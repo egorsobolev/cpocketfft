@@ -1,3 +1,4 @@
 [submodule "pocketfft"]
 	path = pocketfft
 	url = https://gitlab.mpcdf.mpg.de/mtr/pocketfft.git
+	branch = cpp
