@@ -18,10 +18,14 @@ typedef struct CMPLX_FLT
 } complex_float;
 
 
-void fft_r2c(size_t n, size_t *shape, const double *in, complex_double *out);
-void fftf_r2c(size_t n, size_t *shape, const float *in, complex_float *out);
-void fft_c2r(size_t n, size_t *shape, const complex_double *in, double *out);
-void fftf_c2r(size_t n, size_t *shape, const complex_float *in, float *out);
+void fft_r2c(size_t n, size_t *shape, const double *in, complex_double *out,
+             double scale);
+void fftf_r2c(size_t n, size_t *shape, const float *in, complex_float *out,
+              float scale);
+void fft_c2r(size_t n, size_t *shape, const complex_double *in, double *out,
+             double scale);
+void fftf_c2r(size_t n, size_t *shape, const complex_float *in, float *out,
+              float scale);
 
 #ifdef __cplusplus
 }

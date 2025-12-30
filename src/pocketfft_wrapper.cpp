@@ -38,7 +38,7 @@ fft_make_shape (size_t n, size_t *nn, size_t itemsize_real, size_t itemsize_cmpl
 
 
 void
-fft_r2c (size_t n, size_t *nn, const double *in, complex_double * out)
+fft_r2c (size_t n, size_t *nn, const double *in, complex_double * out, double scale)
 {
 	int i;
 	shape_t shape (n), axes (n);
@@ -47,11 +47,11 @@ fft_r2c (size_t n, size_t *nn, const double *in, complex_double * out)
 	                shape, stride_in, stride_out, axes);
 	pocketfft::r2c (shape, stride_in, stride_out, axes, pocketfft::FORWARD,
 	                in, reinterpret_cast < std::complex <double >*>(out),
-	                1.0, 0);
+	                scale, 0);
 }
 
 void
-fftf_r2c (size_t n, size_t *nn, const float *in, complex_float * out)
+fftf_r2c (size_t n, size_t *nn, const float *in, complex_float * out, float scale)
 {
 	shape_t shape (n), axes (n);
 	stride_t stride_in (n), stride_out (n);
@@ -59,11 +59,12 @@ fftf_r2c (size_t n, size_t *nn, const float *in, complex_float * out)
 	                shape, stride_in, stride_out, axes);
 	pocketfft::r2c (shape, stride_in, stride_out, axes, pocketfft::FORWARD,
 	                in, reinterpret_cast < std::complex <float >*>(out),
-	                1.0f, 0);
+	                scale, 0);
 }
 
 void
-fft_c2r (size_t n, size_t *nn, const complex_double * in, double *out)
+fft_c2r (size_t n, size_t *nn, const complex_double * in, double *out,
+         double scale)
 {
 	int i;
 	shape_t shape (n), axes (n);
@@ -72,11 +73,11 @@ fft_c2r (size_t n, size_t *nn, const complex_double * in, double *out)
 	                shape, stride_out, stride_in, axes);
 	pocketfft::c2r (shape, stride_in, stride_out, axes, pocketfft::BACKWARD,
 	                reinterpret_cast < const std::complex <double >*>(in), out,
-	                1.0, 0);
+	                scale, 0);
 }
 
 void
-fftf_c2r (size_t n, size_t *nn, const complex_float * in, float *out)
+fftf_c2r (size_t n, size_t *nn, const complex_float * in, float *out, float scale)
 {
 	shape_t shape (n), axes (n);
 	stride_t stride_in (n), stride_out (n);
@@ -84,5 +85,5 @@ fftf_c2r (size_t n, size_t *nn, const complex_float * in, float *out)
 	                shape, stride_out, stride_in, axes);
 	pocketfft::c2r (shape, stride_in, stride_out, axes, pocketfft::BACKWARD,
 	                reinterpret_cast < const std::complex <float >*>(in), out,
-	                1.0f, 0);
+	                scale, 0);
 }
