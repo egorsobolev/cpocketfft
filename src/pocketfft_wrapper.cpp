@@ -4,7 +4,8 @@ extern "C"
 }
 
 #include "pocketfft/pocketfft_hdronly.h"
-#include <stdio.h>
+#include <stdlib.h>
+
 
 using std::size_t;
 using pocketfft::shape_t;
@@ -36,6 +37,13 @@ fft_make_shape (size_t n, size_t *nn, size_t itemsize_real, size_t itemsize_cmpl
 	}
 }
 
+int cpocketfft_num_threads = 0;
+
+void
+cpocketfft_set_num_threads(int num_threads)
+{
+	cpocketfft_num_threads = num_threads;
+}
 
 void
 fft_r2c (size_t n, size_t *nn, const double *in, complex_double * out, double scale)
@@ -47,7 +55,7 @@ fft_r2c (size_t n, size_t *nn, const double *in, complex_double * out, double sc
 	                shape, stride_in, stride_out, axes);
 	pocketfft::r2c (shape, stride_in, stride_out, axes, pocketfft::FORWARD,
 	                in, reinterpret_cast < std::complex <double >*>(out),
-	                scale, 0);
+	                scale, cpocketfft_num_threads);
 }
 
 void
@@ -59,7 +67,7 @@ fftf_r2c (size_t n, size_t *nn, const float *in, complex_float * out, float scal
 	                shape, stride_in, stride_out, axes);
 	pocketfft::r2c (shape, stride_in, stride_out, axes, pocketfft::FORWARD,
 	                in, reinterpret_cast < std::complex <float >*>(out),
-	                scale, 0);
+	                scale, cpocketfft_num_threads);
 }
 
 void
@@ -73,7 +81,7 @@ fft_c2r (size_t n, size_t *nn, const complex_double * in, double *out,
 	                shape, stride_out, stride_in, axes);
 	pocketfft::c2r (shape, stride_in, stride_out, axes, pocketfft::BACKWARD,
 	                reinterpret_cast < const std::complex <double >*>(in), out,
-	                scale, 0);
+	                scale, cpocketfft_num_threads);
 }
 
 void
@@ -85,5 +93,5 @@ fftf_c2r (size_t n, size_t *nn, const complex_float * in, float *out, float scal
 	                shape, stride_out, stride_in, axes);
 	pocketfft::c2r (shape, stride_in, stride_out, axes, pocketfft::BACKWARD,
 	                reinterpret_cast < const std::complex <float >*>(in), out,
-	                scale, 0);
+	                scale, cpocketfft_num_threads);
 }

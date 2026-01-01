@@ -17,6 +17,7 @@ typedef struct CMPLX_FLT
 	float r, i;
 } complex_float;
 
+void cpocketfft_set_num_threads(int num_threads);
 
 void fft_r2c(size_t n, size_t *shape, const double *in, complex_double *out,
              double scale);
